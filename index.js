@@ -1,6 +1,6 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
-const { Shape, Triangle, Circle, Square } = require("./lib/shapes");
+const { Shape, Triangle, Circle, Square } = require("./lib/shapes.js");
 
 inquirer.prompt = [
   {
@@ -53,7 +53,7 @@ inquirer.prompt = [
 ]
   .then((data) => {
     let shape;
-    switch (data.shape) {
+    switch (data.logoShape) {
       case "Triangle":
         shape = new Triangle(data.text, data.color, data.textcolor);
         break;
