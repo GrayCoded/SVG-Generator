@@ -1,8 +1,9 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
-const { Shape, Triangle, Circle, Square } = require("./lib/shapes.js");
+const {Shape, Triangle, Circle, Square} = require("./lib/shapes.js");
 
-inquirer.prompt = [
+inquirer
+.prompt([
   {
     type: "input",
     message: "What would is the name of the logo?/n",
@@ -50,29 +51,31 @@ inquirer.prompt = [
     },
     name: "logoColor",
   },
-]
-  .then((data) => {
-    let shape;
-    switch (data.logoShape) {
-      case "Triangle":
-        shape = new Triangle(data.text, data.color, data.textcolor);
-        break;
+])
+  .then(data => {
+   const shapeClasses = {
+    Triangle: Triangle,
+    Circle: Circle,
+    Square: Square
+   };
 
-      case "Circle":
-        shape = new Circle(data.text, data.color, data.textcolor);
-        break;
-
-      case "Square":
-        shape = new Square(data.text, data.color, data.textcolor);
-        break;
-    }
+   const ShapeClass = shapeClasses[data.logoShape];
+  if (ShapeClass) {
+    const shape = new ShapeClass(data.text, data.color, data.textcolor);
     const svgContent = shape.renderShape();
     fs.writeFile(`examples/logo.svg`, svgContent, (err) => {
-      err
-        ? console.error("An error has occurred,", err)
-        : console.info("Generated logo.svg!");
+      if (err) {
+        console.error("An error has occurred:", err);
+      } else {
+        console.info("Generated logo.svg!");
+      }
     });
-  })
-  .catch((error) => {
-    console.error("An error occurer,", error);
-  });
+  } else {
+    console.error("Invalid shape selected.");
+  }
+})
+
+
+
+
+
