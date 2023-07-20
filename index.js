@@ -1,19 +1,25 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
 const { Shape, Triangle, Circle, Square } = require("./lib/shapes.js");
-
 inquirer
   .prompt([
     {
       type: "input",
-      message: "What is the name of the logo?",
+      message: "What is the name of the project?",
+      validate: (input) => {
+       if (input.length >= 4 && input === input.toUpperCase ()) {
+        return true;
+      } else {
+        return Promise.reject("Title must be longer then 4 characters."),
+        }
+      },
       name: "title",
     },
     {
       type: "input",
-      message: "What 3 characters would you like to use for your SVG?",
+      message: "What 3 characters would you like to use?(Must be letters)",
       validate: (input) => {
-        if (input.length > 0 && input.length <= 3) {
+        if (input.length > 0 && input.length <= 3 && /^[A-Za-z]+$/) {
           return true;
         } else {
           return Promise.reject("Invalid Input");
@@ -23,9 +29,9 @@ inquirer
     },
     {
       type: "input",
-      message: "What color would you like your text?",
+      message: "What color text would you like? (note:It can be color or hexidecimal",
       validate: (input) => {
-        if (input.length > 0) {
+        if (input.length > 0 && input.length >= 4 && input) {
           return true;
         } else {
           return Promise.reject("Invalid Input");
@@ -35,13 +41,13 @@ inquirer
     },
     {
       type: "list",
-      message: "What shape would you prefer?",
+      message: "What shape would you like your logo to be from the list below?.",
       choices: ["Triangle", "Circle", "Square"],
       name: "logoShape",
     },
     {
       type: "input",
-      message: "What color would you like your logo?",
+      message: "What color would you like your logo?(note:It can be color or hexidecimal)",
       validate: (input) => {
         if (input.length > 0) {
           return true;
