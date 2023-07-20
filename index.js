@@ -6,12 +6,12 @@ inquirer
   .prompt([
     {
       type: "input",
-      message: "What is the name of the logo?\n",
+      message: "What is the name of the logo?",
       name: "title",
     },
     {
       type: "input",
-      message: "What 3 characters would you like to use for your SVG?\n",
+      message: "What 3 characters would you like to use for your SVG?",
       validate: (input) => {
         if (input.length > 0 && input.length <= 3) {
           return true;
@@ -23,7 +23,7 @@ inquirer
     },
     {
       type: "input",
-      message: "What color would you like your text?\n",
+      message: "What color would you like your text?",
       validate: (input) => {
         if (input.length > 0) {
           return true;
@@ -35,13 +35,13 @@ inquirer
     },
     {
       type: "list",
-      message: "What shape would you prefer?\n",
+      message: "What shape would you prefer?",
       choices: ["Triangle", "Circle", "Square"],
       name: "logoShape",
     },
     {
       type: "input",
-      message: "What color would you like your logo?\n",
+      message: "What color would you like your logo?",
       validate: (input) => {
         if (input.length > 0) {
           return true;
@@ -63,8 +63,8 @@ inquirer
     if (ShapeClass) {
       const shape = new ShapeClass(
         data.text,
-        data.logoColor, // Update to data.logoColor
-        data.textColor // Update to data.textColor
+        data.logoColor,
+        data.textColor 
       );
       const svgContent = shape.renderShape();
       fs.writeFile(`examples/logo.svg`, svgContent, (err) => {
