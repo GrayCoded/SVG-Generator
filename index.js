@@ -1,20 +1,9 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
-const { Shape, Triangle, Circle, Square } = require("./lib/shapes.js");
+const {Triangle, Circle, Square} = require("./lib/shapes.js");
 inquirer
   .prompt([
-    {
-      type: "input",
-      message: "What is the name of the project?",
-      validate: (input) => {
-       if (input.length >= 4 && input === input.toUpperCase ()) {
-        return true;
-      } else {
-        return Promise.reject("Title must be longer then 4 characters."),
-        }
-      },
-      name: "title",
-    },
+    
     {
       type: "input",
       message: "What 3 characters would you like to use?(Must be letters)",
@@ -29,9 +18,9 @@ inquirer
     },
     {
       type: "input",
-      message: "What color text would you like? (note:It can be color or hexidecimal",
+      message: "What color text would you like? (note:It can be color or hexidecimal)",
       validate: (input) => {
-        if (input.length > 0 && input.length >= 4 && input) {
+        if (input.length > 0 && input.length >= 3 && input) {
           return true;
         } else {
           return Promise.reject("Invalid Input");
@@ -73,7 +62,7 @@ inquirer
         data.textColor 
       );
       const svgContent = shape.renderShape();
-      fs.writeFile(`examples/logo.svg`, svgContent, (err) => {
+      fs.writeFile(`examples/project-logo.svg`, svgContent, (err) => {
         if (err) {
           console.error("An error has occurred:", err);
         } else {
